@@ -17,6 +17,7 @@ def login():
         return redirect(url_for("user"))
     else:
         if "user" in session:
+            flash("You are already logged in")
             return redirect(url_for("user"))
         return render_template("login.html")
 @app.route("/user")
