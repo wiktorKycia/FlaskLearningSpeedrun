@@ -24,7 +24,6 @@ def login():
 @app.route("/home")
 def home():
     if 'name' in session:
-        # return f"{session['surname']}, {session['age']}, {session['gender']}"
         return render_template("home.html", name=session['name'], surname=session['surname'], age=session['age'], gender=session['gender'])
     else:
         return redirect(url_for("login"))
