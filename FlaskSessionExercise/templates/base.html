@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        h1{
+            background: linear-gradient(90deg, grey, white);
+            margin: 0;
+            padding: 12px 8px;
+        }
+        body
+        {
+            margin: 0;
+        }
+    </style>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <main>
+        {% block body %}
+        {% endblock %}
+    </main>
+</body>
+</html>

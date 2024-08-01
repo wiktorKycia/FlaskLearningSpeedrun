@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Login page{% endblock %}
+{% block head %}
+    <style>
+        main
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            height: 600px;
+        }
+        form
+        {
+            width: 400px;
+            height: 240px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px black;
+            background-color: lightgreen;
+            display: grid;
+        }
+
+    </style>
+{% endblock %}
+{% block body %}
+    <form action="#" method="post">
+        <label for="name">Name:</label><input id="name" type="text" name="name">
+        <label for="surname">Surname:</label><input id="surname" type="text" name="surname">
+        <label for="age">Age:</label><input id="age" type="number" name="age">
+        <label>Gender:
+            <input type="radio" name="gender" id="male" value="male">Male
+            <input type="radio" name="gender" id="female" value="female">Female<br>
+        </label>
+        <input type="submit" value="submit">
+    </form>
+{% endblock %}
