@@ -33,7 +33,7 @@ def logout():
     session.pop('name', None)
     session.pop('surname', None)
     session.pop('age', None)
-    # session.pop('gender', None)
+    session.pop('gender', None)
     return redirect(url_for("login"))
 
 if __name__ == '__main__':
