@@ -19,7 +19,7 @@ def home():
         session['surname'] = request.form['surname']
         session['age'] = request.form['age']
         session['gender'] = request.form['gender']
-        return redirect(url_for("home"))
+        return render_template('home.html', name=session['name'], surname=session['surname'], age=session['age'], gender=session['gender'])
     else:
         if 'name' not in session:
             return redirect(url_for("login"))
