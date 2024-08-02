@@ -1,15 +1,15 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
-from flask import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = "hello"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=1)
 
 db = SQLAlchemy(app)
 
-class users(db.Model):
+class Users(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -30,13 +30,13 @@ def login():
         user = request.form["nm"]
         session["user"] = user
 
-        found_user = users.query.filter_by(name=user).first()
+        found_user = Users.query.filter_by(name=user).first()
         if found_user:
             session["email"] = found_user.email
         else:
-            usr = users(user, "")
+            usr = Users(user, "")
             db.session.add(usr)
-            db.commit()
+            db.session.commit()
 
         flash("Login Successful")
 
@@ -56,9 +56,9 @@ def user():
             email = request.form["email"]
             session["email"] = email
 
-            found_user = users.query.filter_by(name=user).first()
+            found_user = Users.query.filter_by(name=user).first()
             found_user.email = email
-            db.commit()
+            db.session.commit()
 
             flash("Email saved")
         else:
