@@ -12,20 +12,32 @@ def home():
 def login():
     if request.method == "POST":
         session.permanent = True
+
         user = request.form["nm"]
         session["user"] = user
+
         flash("Login Successful")
+
         return redirect(url_for("user"))
     else:
         if "user" in session:
             flash("You are already logged in")
             return redirect(url_for("user"))
         return render_template("login.html")
-@app.route("/user")
+@app.route("/user", methods=['POST', 'GET'])
 def user():
+    email = None
     if "user" in session:
         user = session['user']
-        return render_template("user.html", user=user)
+
+        if request.method == "POST":
+            email = request.form["email"]
+            session["email"] = email
+        else:
+            if "email" in session:
+                email = session["email"]
+
+        return render_template("user.html", user=user, email=email)
     else:
         return redirect(url_for("login"))
 
@@ -35,6 +47,7 @@ def logout():
         user = session['user']
         flash(f"You have been logged out, {user}!", "info")
     session.pop("user", None)
+    session.pop("email", None)
     return redirect(url_for("login"))
 
 if __name__ == '__main__':
