@@ -56,6 +56,10 @@ def user():
             email = request.form["email"]
             session["email"] = email
 
+            found_user = users.query.filter_by(name=user).first()
+            found_user.email = email
+            db.commit()
+
             flash("Email saved")
         else:
             if "email" in session:
