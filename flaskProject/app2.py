@@ -7,16 +7,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=1)
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 class Users(db.Model):
-    _id = db.Column("id", db.Integer, primary_key=True)
+    _id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
 
     def __init__(self, name, email):
         self.name = name
         self.email = email
+
+db.init_app(app)
 
 @app.route('/')
 def home():
@@ -79,5 +81,6 @@ def logout():
     return redirect(url_for("login"))
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
